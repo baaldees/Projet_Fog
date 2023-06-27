@@ -1,5 +1,12 @@
 #   DEPLOIEMENT AVEC FOG
 
+## Schéma réseau
+
+
+
+
+
+
 ## Configuration des machines virtuels
 
 ### PFSENSE
