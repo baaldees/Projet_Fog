@@ -2,9 +2,7 @@
 
 ## Schéma réseau
 
-
-
-
+![ScreenShot_20230627160024](https://github.com/baaldees/Projet_Fog/assets/97484980/d67cc80c-0f95-4ab5-8455-76a6eec5dec9)
 
 
 ## Configuration des machines virtuels
@@ -144,7 +142,7 @@ Create new image
 
 Créer ensuite la tâche de capture de l'hôte :
 
-📂 Host managemen
+📂 Host management
 List all hosts
 cliquez sur le poste à capturer
 affectez un container à host image
@@ -155,6 +153,7 @@ affectez un container à host image
 Maintenant il nous reste a lui attribuer une tâche de capture (Upload), cliquez sur "Basic Task" dans le menu du haut.
 
 Puis sur "capture"
+
 ![ScreenShot_20230627134844](https://github.com/baaldees/Projet_Fog/assets/97484980/7270abd1-8159-4c3c-9151-a82edb81b6f7)
 
 
@@ -184,4 +183,162 @@ Puis cliquez sur le poste de travail a déployer,
 Basic task, Deploy, Create deploy task for ...
 
 ![ScreenShot_20230627135639](https://github.com/baaldees/Projet_Fog/assets/97484980/a733580f-9678-4f0e-a0f9-d5cb5dfee190)
+
+Je relance le poste à déployer en le faisant booter en PXE :
+
+![ScreenShot_20230627160202](https://github.com/baaldees/Projet_Fog/assets/97484980/90ad2243-3b39-4472-82f1-0370af8ba862)
+
+Je peux ensuite suivre son avancement sur le serveur :
+
+![ScreenShot_20230627160255](https://github.com/baaldees/Projet_Fog/assets/97484980/d8a643c9-8238-4505-a27d-5681b24924d2)
+
+### Installation - Agent FOG
+ 
+Je télécharge le client FOG en bas à gauche de l'interface web :
+
+![ScreenShot_20230627160355](https://github.com/baaldees/Projet_Fog/assets/97484980/b4c64a24-dc94-4bb5-b302-079c67fba471)
+
+
+Puis, cliquez sur "New client and Utilities"
+
+![ScreenShot_20230627160421](https://github.com/baaldees/Projet_Fog/assets/97484980/6bb474c9-a877-4597-9a60-2bc3d01597b9)
+
+
+choix entre deux options :
+
+- MSI - Network Deployment (pour un déploiement réseau, notamment via GPO)
+- Smart installer (pour une installation sur tout type d'OS)
+
+
+Choisir le Smart Installer.
+Téléchargez et installez sur la machine cliente. Pendant l'installation, notez l'adresse IP de mon serveur FOG pour lier le poste au serveur.
+
+![ScreenShot_20230627160726](https://github.com/baaldees/Projet_Fog/assets/97484980/fb393fde-9844-4a8e-9c6e-073ba2572d4a)
+
+On peut ensuite accéder aux fichiers de log de FOG à la racine du C:\
+
+### Déploiement de logiciel
+
+📂 Snapin
+Snapin management
+Create new snapin
+
+On peux :
+- nommer le snapin
+- commenter
+- uploader le fichier
+- spécifier les arguments de l'installation silencieuse
+- choisir le template de déploiement de scripts / logiciels
+
+Dans le Batch script, et j'ajoute l'argument /S pour l'installation silencieuse et /L=1036 la langue .
+
+![ScreenShot_20230627161121](https://github.com/baaldees/Projet_Fog/assets/97484980/e1ffef42-1e26-4135-b240-622611030bf7)
+
+Dans Membership et j'ajoute l'hôte sur lequel je souhaite déployer le snapin :
+
+![ScreenShot_20230627161158](https://github.com/baaldees/Projet_Fog/assets/97484980/1a2b06f0-4a04-4786-b053-0a13aa6bd741)
+
+
+📂 cliquez sur l'hôte à sélectionner:
+
+Basic task,
+Advanced,
+Single snapin,
+
+L'installation a bien été prise en compte par ma machine Master
+
+![ScreenShot_20230627161402](https://github.com/baaldees/Projet_Fog/assets/97484980/0972cd19-b145-4af6-b5c2-fcd12dc41a99)
+
+
+Je le vois aussi apparaitre dans le fichier de log de fog :
+
+
+![ScreenShot_20230627161442](https://github.com/baaldees/Projet_Fog/assets/97484980/b52da4af-5c28-48f3-b097-3c1d8cd0ffc3)
+
+
+### Changer le nom d'un poste de travail
+
+Il n'est pas nécessaire d'avoir l'agent installé sur le client.
+
+📂Service configuration
+Hostname changer
+cocher la case
+
+![ScreenShot_20230627161527](https://github.com/baaldees/Projet_Fog/assets/97484980/2e1a83fb-4669-4e05-9529-bf131458be31)
+
+Aprés avoir changer le nom du poste, celui-ci redémarre automatiquement pour prendre en compte la mise à jour.
+
+Pour que le poste client puisse redémarrer alors que l'utilisateur est logué, il faut cocher
+l'option "Name change / AD force reboot" dans le menu active directory, sinon le renommage
+se fera au prochain démarrage du poste.
+
+### Déploiement de script
+
+📂 Snapin
+Snapin management
+Create new snapin
+
+
+ON peux :
+
+- nommer le snapin
+- commenter
+- uploader le fichier
+- spécifier les arguments de l'installation silencieuse
+- choisir le template de déploiement de scripts / logiciels
+
+![ScreenShot_20230627162209](https://github.com/baaldees/Projet_Fog/assets/97484980/71e10ee3-7bd1-4c96-9b3e-2f4b4e8008e7)
+
+Cela a bien fonctionné sur le poste client :
+
+![ScreenShot_20230627162234](https://github.com/baaldees/Projet_Fog/assets/97484980/2b6f0588-9c5e-435b-bd3c-07f651fcd57b)
+
+
+### Plugin
+
+📂 FOG configuration
+FOG settings
+Plugin system
+
+cocher "pluginsys enabled"
+
+Un nouveau menu "Plugin" est apparu.
+
+📂 choisir le plugin souhaité "PushBullet"
+Cliquez dessus pour l'activer
+Install plugins
+Cliquez sur "pushbullet"
+Install
+Le plugin apparait dans le menu
+
+Après la connexion à mon compte et l'installation de l'application, j'ai accès aux notifications.
+
+
+![ScreenShot_20230627162403](https://github.com/baaldees/Projet_Fog/assets/97484980/3f6c99ad-3972-4520-8286-be22b0b6d9f6)
+
+### Installation Office via ODT
+
+
+
+### Serveur FOG - Nœud distant
+
+Configuration du deuxième serveur FOG :
+
+![ScreenShot_20230627162707](https://github.com/baaldees/Projet_Fog/assets/97484980/1fe89cec-1d3a-4c90-a08e-11f71f68bb79)
+
+
+Mon serveur est bien installé :
+
+![ScreenShot_20230627162738](https://github.com/baaldees/Projet_Fog/assets/97484980/497f3298-791a-4616-a54a-01d0870a1720)
+
+
+On peux ensuite y accéder via le dashboard si j'active l'option "graphique autorisée"
+
+![ScreenShot_20230627162815](https://github.com/baaldees/Projet_Fog/assets/97484980/a6661617-a845-47b7-818b-a287edf61bc7)
+
+
+
+
+
+
 
