@@ -318,6 +318,58 @@ Après la connexion à mon compte et l'installation de l'application, j'ai accè
 
 ### Installation Office via ODT
 
+### créer un partage réseau
+
+
+
+        `cd /opt/fog`
+
+        `mkdir OfficeDeployment`
+
+        `chmod 777 OfficeDeployment`
+
+![ScreenShot_20230627164842](https://github.com/baaldees/Projet_Fog/assets/97484980/5081e019-6d45-4fa5-9318-4cc4fb56f282)
+
+        `apt install samba`
+
+        `nano /etc/samba/smb.conf`
+
+
+### ajouter les lignes suivantes à la fin du fichier smb.conf
+
+[OfficeDeployment]
+
+path = /opt/fog/OfficeDeployment
+
+browsable = yes
+
+writable = yes
+
+guest ok = yes
+
+read only = no
+
+### redémarrer le service
+
+systemctl restart smdb
+
+On peut accéder à ce partage par le chemin \\192.168.1.253\OfficeDeployment
+J'y copie le fichier Office365.xml
+
+![ScreenShot_20230627165447](https://github.com/baaldees/Projet_Fog/assets/97484980/f005fc6b-e39f-4b12-b5ce-995127dd315c)
+
+
+### création d'une tâche sous FOG
+
+![ScreenShot_20230627165532](https://github.com/baaldees/Projet_Fog/assets/97484980/24e03df6-2389-4abf-970a-558146185dea)
+
+
+![ScreenShot_20230627165547](https://github.com/baaldees/Projet_Fog/assets/97484980/f1c72b79-a701-451c-9334-747717961a10)
+
+
+Lancement du déploiement, et tout est ok :
+
+![ScreenShot_20230627165628](https://github.com/baaldees/Projet_Fog/assets/97484980/cc5b1438-a805-4946-9d0b-c0b5a803c4c0)
 
 
 ### Serveur FOG - Nœud distant
@@ -342,3 +394,8 @@ On peux ensuite y accéder via le dashboard si j'active l'option "graphique auto
 
 
 
+
+
+
+
+    
