@@ -223,7 +223,7 @@ On peut ensuite accéder aux fichiers de log de FOG à la racine du C:\
 Snapin management
 Create new snapin
 
-On peux :
+On peut :
 - nommer le snapin
 - commenter
 - uploader le fichier
@@ -279,7 +279,7 @@ Snapin management
 Create new snapin
 
 
-ON peux :
+ON peut :
 
 - nommer le snapin
 - commenter
